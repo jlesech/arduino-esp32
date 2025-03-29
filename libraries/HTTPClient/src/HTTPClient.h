@@ -219,6 +219,7 @@ public:
   // Redirections
   void setFollowRedirects(followRedirects_t follow);
   void setRedirectLimit(uint16_t limit);  // max redirects to follow for a single request
+  void resetAuthorizationOnRedirect(bool reset);
 
   bool setURL(const String &url);
   void useHTTP10(bool usehttp10 = true);
@@ -312,6 +313,8 @@ protected:
   bool _canReuse = false;
   followRedirects_t _followRedirects = HTTPC_DISABLE_FOLLOW_REDIRECTS;
   uint16_t _redirectLimit = 10;
+  bool _resetAuthorizationOnRedirect = false;
+
   String _location;
   transferEncoding_t _transferEncoding = HTTPC_TE_IDENTITY;
 

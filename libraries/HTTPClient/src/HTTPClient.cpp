@@ -285,6 +285,9 @@ bool HTTPClient::beginInternal(String url, const char *expectedProtocol) {
   }
   if (_host != the_host && connected()) {
     log_d("switching host from '%s' to '%s'. disconnecting first", _host.c_str(), the_host.c_str());
+    if (_resetAuthorizationOnRedirect) {
+      _base64Authorization = "";
+    }
     _canReuse = false;
     disconnect(true);
   }
@@ -1433,6 +1436,10 @@ void HTTPClient::setFollowRedirects(followRedirects_t follow) {
 
 void HTTPClient::setRedirectLimit(uint16_t limit) {
   _redirectLimit = limit;
+}
+
+void HTTPClient::resetAuthorizationOnRedirect(bool reset) {
+  _resetAuthorizationOnRedirect = reset;
 }
 
 /**
